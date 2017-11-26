@@ -4,11 +4,14 @@ import tensorflow as tf
 import numpy as np
 import sequence_model
 from sklearn import metrics
+import os
+
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 batch_size = 9600
 show_step = 200
 
-master = data_input.DataMaster(train_mode=False)
+master = data_input.DataMaster(train_mode=False, test_file="")
 
 model = sequence_model.SeqModel()
 
@@ -22,8 +25,8 @@ with tf.Session() as sess:
     for step, index in enumerate(range(0, master.datasize, batch_size)):
         batch_xs, batch_lens = master.mapping(master.train_x[index:index + batch_size])
         batch_ys = master.train_y[index:index + batch_size]
-        predictions, logits, batch_accuracy, auc = sess.run(
-            [model.prediction, model.activation_logits, model.accuracy, model.auc_opt],
+        predictions, logits, batch_accuracy = sess.run(
+            [model.prediction, model.activation_logits, model.accuracy],
             feed_dict={model.x: batch_xs,
                        model.y: batch_ys,
                        model.batch_lens: batch_lens})
@@ -32,7 +35,7 @@ with tf.Session() as sess:
 
         if step % show_step == 0:
             print("step %d(/%d):" % (step + 1, master.datasize // (batch_size) + 1))
-            print("accuracy: %.3f, auc: %.6f" % (batch_accuracy, auc))
+            print("accuracy: %.3f, auc: %.6f" % (batch_accuracy))
 
     y_pred = np.array(y_pred).reshape(-1)
     y_logits = np.array(y_logits).reshape(-1)
