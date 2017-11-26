@@ -2,7 +2,7 @@
 import tensorflow as tf
 import numpy as np
 
-n_hidden = 20
+n_hidden = 60
 keep_prob = 0.9
 lr = 0.01
 sequence_lens = 150
