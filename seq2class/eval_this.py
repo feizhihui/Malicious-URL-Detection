@@ -35,7 +35,7 @@ with tf.Session() as sess:
 
         if step % show_step == 0:
             print("step %d(/%d):" % (step + 1, master.datasize // (batch_size) + 1))
-            print("accuracy: %.3f, auc: %.6f" % (batch_accuracy))
+            print("accuracy: %.3f" % (batch_accuracy))
 
     y_pred = np.array(y_pred).reshape(-1)
     y_logits = np.array(y_logits).reshape(-1)
