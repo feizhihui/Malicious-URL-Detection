@@ -11,10 +11,10 @@ sequence_lens = 150
 class DataMaster(object):
     # ==============
     def __init__(self, train_mode=True):
-        train_set = []
-        train_label = []
-        test_set = []
-        test_label = []
+        train_set = dict()
+        train_label = dict()
+        test_set = dict()
+        test_label = dict()
         for filename in glob.glob("../Data/*_norm.txt"):
             with open(filename, "r") as file:
                 subset = []
@@ -23,7 +23,7 @@ class DataMaster(object):
                     line = line.split()[0]
                     subset.append(line.lower())
                 lengths = len(subset)
-                train_set += subset[:int(lengths * train_eval_split_line)]
+                train_set["filename"]= subset[:int(lengths * train_eval_split_line)]
                 train_label += [0] * int(lengths * train_eval_split_line)
                 test_set += subset[int(lengths * train_eval_split_line):]
                 test_label += [0] * (lengths - int(lengths * train_eval_split_line))
