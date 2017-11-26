@@ -4,18 +4,22 @@ import tensorflow as tf
 import numpy as np
 import sequence_model
 from sklearn import metrics
-import os
+import warnings
 
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
-
+warnings.filterwarnings("ignore")
+train_eval_split_line = 0.9
 batch_size = 9600
 show_step = 200
-
-master = data_input.DataMaster(train_mode=False, test_file="")
+filemark = "Sg_login_norm.txt"
+master = data_input.DataMaster(train_mode=False, test_file=filemark)
 
 model = sequence_model.SeqModel()
 
 saver = tf.train.Saver()
+if filemark != "":
+    print("eval last %.2f percent in %s " % (1 - train_eval_split_line, filemark))
+else:
+    print("test last %.2f percent in all six dataset" % (1 - train_eval_split_line))
 
 y_pred = []
 y_logits = []
