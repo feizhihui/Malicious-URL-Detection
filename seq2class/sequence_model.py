@@ -19,15 +19,18 @@ class SeqModel(object):
         input_x = tf.one_hot(self.x, depth=url_char_scope)
         # Current data input shape: (batch_size, n_steps, n_input)
         # Forward direction cell
-        lstm_fw_cell = tf.contrib.rnn.GRUCell(n_hidden)
+        lstm_fw_cell = tf.contrib.rnn.LSTMCell(n_hidden)
         lstm_fw_cell = tf.contrib.rnn.DropoutWrapper(lstm_fw_cell, output_keep_prob=keep_prob)
 
         # network = rnn_cell.MultiRNNCell([lstm_fw_cell, lstm_bw_cell] * 3)
         # x shape is [batch_size, max_time, input_size]
-        outputs, output_sate = tf.nn.dynamic_rnn(lstm_fw_cell, input_x,
-                                                 sequence_length=self.batch_lens,
-                                                 dtype=tf.float32)
-        outputs = output_sate
+        outputs, output_state = tf.nn.dynamic_rnn(lstm_fw_cell, input_x,
+                                                  sequence_length=self.batch_lens,
+                                                  dtype=tf.float32)
+        # if RNNCell,GRUCell
+        # outputs=output_sate
+        # if LSTMCell
+        outputs = output_state.h
 
         with tf.name_scope("sigmoid_layer"):
             weights = tf.Variable(tf.truncated_normal([n_hidden, class_num]) * np.sqrt(2.0 / (2 * n_hidden)),
