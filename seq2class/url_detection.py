@@ -14,7 +14,7 @@ filename = "../Data/29_1.txt"
 train_eval_split_line = 0.9
 batch_size = 9600
 show_step = 200
-filemark = ""
+filemark = ""  # "" default test all file
 master = data_input.DataMaster(train_mode=False, test_file=filemark)
 
 model = sequence_model.SeqModel()
