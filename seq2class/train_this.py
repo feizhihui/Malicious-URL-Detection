@@ -17,7 +17,7 @@ with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     sess.run(tf.local_variables_initializer())
     for epoch in range(epoch_num):
-        print('========== epoch - ', str(epoch + 1), "===================")
+        print('========== epoch - ', str(epoch + 1), "==================")
         master.shuffle()
         for step, index in enumerate(range(0, master.datasize, batch_size)):
             batch_xs, batch_lens = master.mapping(master.train_x[index:index + batch_size])
