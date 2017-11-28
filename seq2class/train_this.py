@@ -8,7 +8,7 @@ batch_size = 256
 epoch_num = 8
 show_step = 150
 
-# =================================
+# ======================================
 
 master = DataMaster()
 model = SeqModel()
