@@ -15,7 +15,7 @@ class DataMaster(object):
         train_label = dict()
         test_set = dict()
         test_label = dict()
-        for filename in glob.glob("../Data/*_norm.txt"):
+        for filename in glob.glob(r"../Data\*_norm.txt"):
             filemark = filename.split("\\")[1]
             with open(filename, "r") as file:
                 subset = []
@@ -32,7 +32,7 @@ class DataMaster(object):
                 print("training size:{}, test size {}".format(int(lengths * train_eval_split_line),
                                                               lengths - int(lengths * train_eval_split_line)))
 
-        for filename in glob.glob("../Data/*_mal.txt"):
+        for filename in glob.glob(r"../Data\*_mal.txt"):
             filemark = filename.split("\\")[1]
             with open(filename, "r") as file:
                 subset = []
